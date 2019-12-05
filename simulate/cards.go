@@ -43,17 +43,16 @@ func score(hand []card) int {
 	for _, c := range hand {
 		if c == a {
 			aces++
+			continue
 		}
 		score += cardsKey[c][0]
 	}
-	if aces == 1 {
-		if 11 + score <= 21 {
-			score += 11
-		} else {
+	for i := 0; i < aces; i++ {
+		if 11 + score > 21 {
 			score += 1
+		} else {
+			score += 11
 		}
-	} else {
-		score += aces
 	}
 	return score
 }

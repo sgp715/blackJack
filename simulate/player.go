@@ -9,7 +9,7 @@ type player struct {
 	min int
 	bet int
 	wins int
-	loses int
+	losses int
 	ties int
 }
 
@@ -20,7 +20,7 @@ func newPlayer(min, start int) player {
 type winnings struct {
 	played string
 	wins string
-	loses string
+	losses string
 	ties string
 	lp string
 	wp string
@@ -47,7 +47,7 @@ func (p *player) lose() {
 	if p.done() {
 		return
 	}
-	p.loses++
+	p.losses++
 	p.bet = 0
 }
 
@@ -65,6 +65,11 @@ func (p *player) placeBet(s *shoe) {
 	p.chips--
 }
 
+func (p *player) reset() {
+	p.hand = make([]card, 2)
+}
+
+
 
 func (p *player) play(d dealer) {
 }
@@ -75,15 +80,15 @@ func (p *player) play(d dealer) {
 //}
 
 func (p *player) results() winnings {
-	t := p.wins + p.loses + p.ties
+	t := p.wins + p.losses + p.ties
 	total := fmt.Sprintf("total=%v", t)
 	wins := fmt.Sprintf("wins=%v", p.wins)
-	loses := fmt.Sprintf("loses=%v", p.loses)
+	losses := fmt.Sprintf("losses=%v", p.losses)
 	ties := fmt.Sprintf("ties=%v", p.ties)
 	chips := fmt.Sprintf("chips=%v", p.chips)
 	net := fmt.Sprintf("net=%v", (p.chips - p.start) * p.min)
 	wp := fmt.Sprintf("wins percent=%.2f", (float64(p.wins) / float64(t)) * 100)
-	lp := fmt.Sprintf("lose percent=%.2f", (float64(p.loses) / float64(t)) * 100)
+	lp := fmt.Sprintf("loss percent=%.2f", (float64(p.losses) / float64(t)) * 100)
 	tp := fmt.Sprintf("ties percent=%.2f", (float64(p.ties) / float64(t)) * 100)
-	return winnings{ played: total,  wins: wins, loses: loses, ties: ties, net: net, chips: chips, lp: lp, wp: wp, tp: tp}
+	return winnings{ played: total,  wins: wins, losses: losses, ties: ties, net: net, chips: chips, lp: lp, wp: wp, tp: tp}
 }
