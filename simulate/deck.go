@@ -1,12 +1,12 @@
-package blackJack
+package simulate
 
 const deckSize = 52
 
 func newDeck() []card {
 	var cards []card
-	for i, c := range cardNames {
+	for _, c := range cardNames {
 		for j := 0; j < 4; j++ {
-			cards[i] = card(c)
+			cards = append(cards, c)
 		}
 	}
 	return cards

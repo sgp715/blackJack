@@ -1,4 +1,4 @@
-package blackJack
+package simulate
 
 import (
 	"math/rand"
@@ -20,11 +20,7 @@ func reseed() {
 }
 
 func newShoe() shoe {
-	var cards []card
-	for i := 0; i < shoeSize; i++ {
-		cards = append(cards, newDeck()...)
-	}
-	s := shoe{cards: cards}
+	s := shoe{}
 	s.shuffle()
 	return s
 }
@@ -44,7 +40,7 @@ func findCount(c card) int {
 	return -1
 }
 
-func (s *shoe) next()  {
+func (s *shoe) next() card {
 	if s.selected > s.split {
 		s.shuffle()
 	}
@@ -53,13 +49,19 @@ func (s *shoe) next()  {
 	c := findCount(top)
 	s.count += c
 	s.selected += 1
+	return top
 }
 
 func (s *shoe) shuffle() {
+	var cards []card
+	for i := 0; i < shoeSize; i++ {
+		cards = append(cards, newDeck()...)
+	}
+	s.cards = cards
 	s.count = 0
 	s.selected = 0
 	reseed()
-	halfShoe := int(shoeSize * 0.5)
+	halfShoe := int(shoeSize * 0.5) * deckSize
 	s.split = rand.Intn(halfShoe) + halfShoe
-	rand.Shuffle(deckSize, func(i, j int) { s.cards[i], s.cards[j] = s.cards[j], s.cards[i] })
+	rand.Shuffle(shoeSize * deckSize, func(i, j int) { s.cards[i], s.cards[j] = s.cards[j], s.cards[i] })
 }

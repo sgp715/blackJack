@@ -1,4 +1,4 @@
-package blackJack
+package simulate
 
 import (
 	"fmt"
