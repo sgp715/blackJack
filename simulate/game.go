@@ -23,6 +23,7 @@ func Play(rounds, nPlayers, minBet, multiplier int) []winnings {
 		play(&shoe, &dealer, players)
 		dealer.play(&shoe, players)
 		payout(&dealer, players)
+		reset(&dealer, players)
 	}
 	var stats []winnings
 	for _, p := range players {
@@ -69,20 +70,20 @@ func payout(d *dealer, players []*player) {
 		} else if pScore > 21 {
 			p.lose()
 		} else if dScore > 21 {
-			//fmt.Println("win")
-			//fmt.Println(d)
-			//fmt.Println(p)
 			p.win()
 		} else if pScore < dScore {
 			p.lose()
 		} else if pScore > dScore {
-			//fmt.Println("win")
-			///fmt.Println(d)
-			//fmt.Println(p)
 			p.win()
 		} else {
 			p.tie()
 		}
+	}
+	d.reset()
+}
+
+func reset(d *dealer, players []*player) {
+	for _, p := range players {
 		p.reset()
 	}
 	d.reset()

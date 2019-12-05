@@ -30,7 +30,7 @@ func (d *dealer) play(s *shoe, players []*player) {
 
 func (d *dealer) is21() bool {
 	if d.hand[faceup] == a {
-		if cardsKey[d.hand[faceup]][0] == 10 {
+		if cardsKey[d.hand[second]][0] == 10 {
 			return true
 		}
 	}
