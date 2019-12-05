@@ -17,12 +17,12 @@ func Play(rounds, nPlayers, minBet, multiplier int) []winnings {
 		bet(&shoe, players)
 		deal(&shoe, &dealer, players)
 		if dealer.is21() {
-			payout(&shoe, &dealer, players)
+			payout(&dealer, players)
 			continue
 		}
 		play(&shoe, &dealer, players)
 		dealer.play(players)
-		payout(&shoe, &dealer, players)
+		payout(&dealer, players)
 	}
 	var stats []winnings
 	for _, p := range players {
@@ -38,13 +38,13 @@ func deal(s *shoe, d *dealer, players []*player) {
 		p.hand[first] = topCard
 	}
 	topCard := s.next()
-	d.facedown = topCard
+	d.hand[faceup] = topCard
 	for _, p := range players {
 		topCard := s.next()
 		p.hand[second] = topCard
 	}
 	topCard = s.next()
-	d.faceup = topCard
+	d.hand[second] = topCard
 }
 
 func bet(s *shoe, players []*player) {
@@ -59,11 +59,11 @@ func play(s *shoe, d *dealer, players []*player) {
 	}
 }
 
-func payout(s *shoe, d *dealer, players []*player) {
-	dScore := score(d.facedown, d.faceup)
+func payout(d *dealer, players []*player) {
+	dScore := score(d.hand)
 	for _, p := range players {
 		if p.done() { continue }
-		pScore := score(p.hand[0], p.hand[1])
+		pScore := score(p.hand)
 		if pScore < dScore {
 			p.lose()
 		} else if pScore > dScore {
@@ -72,21 +72,4 @@ func payout(s *shoe, d *dealer, players []*player) {
 			p.tie()
 		}
 	}
-}
-
-func score(fc card, sc card) int {
-	if fc == a && sc == a {
-		return cardsKey[fc][0] + cardsKey[sc][1] // 1 + 11
-	} else if fc == a {
-		if cardsKey[fc][1] + cardsKey[sc][0] < 21 {
-			return cardsKey[fc][1] + cardsKey[sc][0]
-		}
-		return cardsKey[fc][0] + cardsKey[sc][0]
-	} else if sc == a {
-		if cardsKey[fc][0] + cardsKey[sc][1] < 21 {
-			return cardsKey[fc][0] + cardsKey[sc][1]
-		}
-		return cardsKey[fc][0] + cardsKey[sc][0]
-	}
-	return cardsKey[fc][0] + cardsKey[sc][0]
 }

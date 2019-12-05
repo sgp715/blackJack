@@ -8,7 +8,7 @@ import (
 const shoeSize = 6
 
 type shoe struct {
-	cards []card
+	cards cards
 	selected int
 	split int
 	count int

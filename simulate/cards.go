@@ -34,3 +34,26 @@ var cardsKey map[card][]int = map[card][]int{
 	q:[]int{10},
 	k:[]int{10},
 	a:[]int{1, 11}}
+
+type cards []card
+
+func score(hand []card) int {
+	var aces int
+	var score int
+	for _, c := range hand {
+		if c == a {
+			aces++
+		}
+		score += cardsKey[c][0]
+	}
+	if aces == 1 {
+		if 11 + score <= 21 {
+			score += 11
+		} else {
+			score += 1
+		}
+	} else {
+		score += aces
+	}
+	return score
+}

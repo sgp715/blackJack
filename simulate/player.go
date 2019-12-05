@@ -3,7 +3,7 @@ package simulate
 import "fmt"
 
 type player struct {
-	hand [2]card
+	hand cards
 	chips  int
 	start int
 	min int
@@ -14,7 +14,7 @@ type player struct {
 }
 
 func newPlayer(min, start int) player {
-	return player{min: min, chips: start, start: start}
+	return player{hand: make([]card, 2), min: min, chips: start, start: start}
 }
 
 type winnings struct {

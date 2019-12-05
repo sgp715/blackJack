@@ -1,16 +1,17 @@
 package simulate
 
+const faceup = 0
+
 type dealer struct {
-	facedown card
-	faceup card
+	hand cards
 }
 
 func (d *dealer) play(players []*player) {
 }
 
 func (d *dealer) is21() bool {
-	if d.faceup == a {
-		if cardsKey[d.facedown][0] == 10 {
+	if d.hand[faceup] == a {
+		if cardsKey[d.hand[first]][0] == 10 {
 			return true
 		}
 	}
@@ -18,5 +19,5 @@ func (d *dealer) is21() bool {
 }
 
 func newDealer() dealer {
-	return dealer{}
+	return dealer{hand: make([]card, 2)}
 }
