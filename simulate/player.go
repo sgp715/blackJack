@@ -38,7 +38,7 @@ func (p *player) win() {
 	if p.done() {
 		return
 	}
-	p.chips += 2
+	p.chips += (p.bet * 2)
 	p.wins++
 	p.bet = 0
 }
@@ -55,14 +55,19 @@ func (p *player) tie() {
 	if p.done() {
 		return
 	}
-	p.chips++
+	p.chips += (p.bet)
 	p.ties++
 	p.bet = 0
 }
 
 func (p *player) placeBet(sh *shoe) {
 	if p.chips <= 0 { return }
-	p.chips--
+	if 1 + (sh.count) < p.chips {
+		p.bet = sh.count
+	} else {
+		p.bet = p.chips
+	}
+	p.chips -= p.bet
 }
 
 func (p *player) reset() {
