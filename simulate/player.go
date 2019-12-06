@@ -93,7 +93,7 @@ var strategy map[card]map[int]move = map[card]map[int]move{
 }
 
 func (p *player) play(d dealer) move {
-	return strategya[d.hand[faceup]][score(p.hand)]
+	return strategy[d.hand[faceup]][score(p.hand)]
 }
 
 func (p *player) results() winnings {
