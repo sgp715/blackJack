@@ -77,22 +77,23 @@ const (
 )
 
 var strategy map[card]map[int]move = map[card]map[int]move{
-	two: map[int]move{ 8: , 9:, 10:, 11:, 12:, 13:, 14:, 15:, 16:, 17: },
-	three: map[int]move{ 8: , 9:, 10:, 11:, 12:, 13:, 14:, 15:, 16:, 17: },
-	four: map[int]move{ 8: , 9:, 10:, 11:, 12:, 13:, 14:, 15:, 16:, 17: },
-	five: map[int]move{ 8: , 9:, 10:, 11:, 12:, 13:, 14:, 15:, 16:, 17: },
-	six: map[int]move{ 8: , 9:, 10:, 11:, 12:, 13:, 14:, 15:, 16:, 17: },
-	a: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
-	a: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
-	a: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
-	a: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
-	a: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
-	a: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
-	a: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
+	two: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: s, 14: s, 15: s, 16: s, 17: s},
+	three: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: s, 14: s, 15: s, 16: s, 17: s},
+	four: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: s, 13: s, 14: s, 15: s, 16: s, 17: s},
+	five: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: s, 13: s, 14: s, 15: s, 16: s, 17: s},
+	six: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: s, 13: s, 14: s, 15: s, 16: s, 17: s},
+	seven: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
+	eight: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
+	nine: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
+	ten: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
+	j: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
+	q: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
+	k: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
 	a: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
 }
 
-func (p *player) play(d dealer) {
+func (p *player) play(d dealer) move {
+	return strategya[d.hand[faceup]][score(p.hand)]
 }
 
 func (p *player) results() winnings {
