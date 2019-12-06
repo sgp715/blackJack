@@ -56,7 +56,7 @@ func bet(s *shoe, players []*player) {
 
 func play(s *shoe, d *dealer, players []*player) {
 	for _, p := range players {
-		p.play(*d)
+		p.play(s, *d)
 	}
 }
 

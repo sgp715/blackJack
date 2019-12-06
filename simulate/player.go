@@ -60,7 +60,7 @@ func (p *player) tie() {
 	p.bet = 0
 }
 
-func (p *player) placeBet(s *shoe) {
+func (p *player) placeBet(sh *shoe) {
 	if p.chips <= 0 { return }
 	p.chips--
 }
@@ -92,8 +92,13 @@ var strategy map[card]map[int]move = map[card]map[int]move{
 	a: map[int]move{ 8: h, 9: h, 10: h, 11: h, 12: h, 13: h, 14: h, 15: h, 16: h, 17: s},
 }
 
-func (p *player) play(d dealer) move {
-	return strategy[d.hand[faceup]][score(p.hand)]
+func (p *player) play(sh *shoe, d dealer) {
+	sc := score(p.hand)
+	for sc <= 17 && strategy[d.hand[faceup]][sc] != s {
+		topCard := sh.next()
+		p.hand = append(p.hand, topCard)
+		sc = score(p.hand)
+	}
 }
 
 func (p *player) results() winnings {
