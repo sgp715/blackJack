@@ -2,7 +2,7 @@ package simulate
 
 //import "fmt"
 
-const faceup = 0
+const upcard = 0
 
 type dealer struct {
 	hand cards
@@ -29,7 +29,7 @@ func (d *dealer) play(s *shoe, players []*player) {
 }
 
 func (d *dealer) is21() bool {
-	if d.hand[faceup] == a {
+	if d.hand[upcard] == a {
 		if cardsKey[d.hand[second]][0] == 10 {
 			return true
 		}

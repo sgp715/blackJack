@@ -39,7 +39,7 @@ func deal(s *shoe, d *dealer, players []*player) {
 		p.hand[first] = topCard
 	}
 	topCard := s.next()
-	d.hand[faceup] = topCard
+	d.hand[upcard] = topCard
 	for _, p := range players {
 		topCard := s.next()
 		p.hand[second] = topCard
@@ -50,7 +50,7 @@ func deal(s *shoe, d *dealer, players []*player) {
 
 func bet(s *shoe, players []*player) {
 	for _, p := range players {
-		p.placeBet(s)
+		p.initialBet(s)
 	}
 }
 
