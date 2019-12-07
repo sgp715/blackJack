@@ -109,7 +109,48 @@ var hardTotals = map[card]map[int]move{
 	a: { 8: h, 9: h, 10: h, 11: db, 12: h, 13: h, 14: h, 15: h, 16: h },
 }
 
+var softTotals = map[card]map[card]move{
+	two: { two: h, three: h, four: h, five: h, six: h, seven: st},
+	three: { two: h, three: h, four: h, five: h, six: db, seven: st},
+	four: { two: h, three: h, four: db, five: db, six: db, seven: st},
+	five: { two: db, three: db, four: db, five: db, six: db, seven: st},
+	six: { two: db, three: db, four: db, five: db, six: db, seven: st},
+	seven: { two: h, three: h, four: h, five: h, six: h, seven: st},
+	eight: { two: h, three: h, four: h, five: h, six: h, seven: st},
+	nine: { two: h, three: h, four: h, five: h, six: h, seven: h},
+	ten: { two: h, three: h, four: h, five: h, six: h, seven: h},
+	j: { two: h, three: h, four: h, five: h, six: h, seven: h},
+	q: { two: h, three: h, four: h, five: h, six: h, seven: h},
+	k: { two: h, three: h, four: h, five: h, six: h, seven: h},
+	a: { two: h, three: h, four: h, five: h, six: h, seven: h},
+}
+
+func soft(hand cards) card {
+	if hand[first] == a {
+		if hand[second] != a {
+			return hand[second]
+		}
+	}
+	if hand[second] == a {
+		if hand[first] != a {
+			return hand[first]
+		}
+	}
+	return ""
+}
+
 func (p *player) play(sh *shoe, d dealer) {
+	if hardCard := soft(p.hand); hardCard != "" {
+		if score(p.hand) > 18 {
+			return
+		}
+		mv := softTotals[d.hand[upcard]][hardCard]
+		if mv == st {
+			return
+		} else if mv == h {
+			p.hand = append(p.hand, sh.next())
+		}
+	}
 	sc := score(p.hand)
 	if sc >= 17 {
 		return
@@ -117,13 +158,11 @@ func (p *player) play(sh *shoe, d dealer) {
 	mv := hardTotals[d.hand[upcard]][sc]
 	if mv == db {
 		p.placeBet(p.calcBet(p.bet))
-		topCard := sh.next()
-		p.hand = append(p.hand, topCard)
+		p.hand = append(p.hand, sh.next())
 		return
 	}
-	for mv != st {
-		topCard := sh.next()
-		p.hand = append(p.hand, topCard)
+	for mv == h {
+		p.hand = append(p.hand, sh.next())
 		sc = score(p.hand)
 		if sc >= 17 {
 			return
