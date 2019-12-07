@@ -9,4 +9,4 @@
     * dealer strategy; player plays hard totals stratetgy
         * only stand, double or hit
         * 0.88 win ratio
-        * BUT average earnings 500X?
+        * but losing less money

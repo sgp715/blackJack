@@ -5,11 +5,11 @@ const (
 	second = 1
 )
 
-func Play(rounds, nPlayers, minBet, multiplier int) []winnings {
+func Play(rounds, nPlayers, chips int) []winnings {
 	shoe := newShoe()
 	var players []*player
 	for i := 0; i < nPlayers; i++ {
-		p :=  newPlayer(minBet, multiplier)
+		p :=  newPlayer(chips)
 		players = append(players, &p)
 	}
 	dealer := newDealer()
